@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2020.
+# (C) Copyright IBM Corp. 2026.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,13 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# IBM OpenAPI SDK Code Generator Version: 3.114.0-a902401e-20260427-192904
+
 """
 Custom Pages
+
+API Version: 1.0.0
 """
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 
 from ibm_cloud_sdk_core import BaseService, DetailedResponse
@@ -34,6 +38,7 @@ from .common import get_sdk_headers
 # Service
 ##############################################################################
 
+
 class CustomPagesV1(BaseService):
     """The Custom Pages V1 service."""
 
@@ -41,11 +46,12 @@ class CustomPagesV1(BaseService):
     DEFAULT_SERVICE_NAME = 'custom_pages'
 
     @classmethod
-    def new_instance(cls,
-                     crn: str,
-                     zone_identifier: str,
-                     service_name: str = DEFAULT_SERVICE_NAME,
-                    ) -> 'CustomPagesV1':
+    def new_instance(
+        cls,
+        crn: str,
+        zone_identifier: str,
+        service_name: str = DEFAULT_SERVICE_NAME,
+    ) -> 'CustomPagesV1':
         """
         Return a new client for the Custom Pages service using the specified
                parameters and external configuration.
@@ -68,11 +74,12 @@ class CustomPagesV1(BaseService):
         service.configure_service(service_name)
         return service
 
-    def __init__(self,
-                 crn: str,
-                 zone_identifier: str,
-                 authenticator: Authenticator = None,
-                ) -> None:
+    def __init__(
+        self,
+        crn: str,
+        zone_identifier: str,
+        authenticator: Authenticator = None,
+    ) -> None:
         """
         Construct a new client for the Custom Pages service.
 
@@ -81,7 +88,7 @@ class CustomPagesV1(BaseService):
         :param str zone_identifier: Zone identifier.
 
         :param Authenticator authenticator: The authenticator specifies the authentication mechanism.
-               Get up to date information from https://github.com/IBM/python-sdk-core/blob/master/README.md
+               Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
         if crn is None:
@@ -89,20 +96,17 @@ class CustomPagesV1(BaseService):
         if zone_identifier is None:
             raise ValueError('zone_identifier must be provided')
 
-        BaseService.__init__(self,
-                             service_url=self.DEFAULT_SERVICE_URL,
-                             authenticator=authenticator)
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
         self.crn = crn
         self.zone_identifier = zone_identifier
-
 
     #########################
     # Custom Pages
     #########################
 
-
-    def list_instance_custom_pages(self,
-        **kwargs
+    def list_instance_custom_pages(
+        self,
+        **kwargs,
     ) -> DetailedResponse:
         """
         List all custom pages for a given instance.
@@ -115,27 +119,35 @@ class CustomPagesV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_instance_custom_pages')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_instance_custom_pages',
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
 
-        url = '/v1/{0}/custom_pages'.format(
-            *self.encode_path_vars(self.crn))
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        path_param_keys = ['crn']
+        path_param_values = self.encode_path_vars(self.crn)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/{crn}/custom_pages'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
-
-    def get_instance_custom_page(self,
+    def get_instance_custom_page(
+        self,
         page_identifier: str,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a custom page for a given instance.
@@ -148,33 +160,41 @@ class CustomPagesV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `CustomPageSpecificResp` object
         """
 
-        if page_identifier is None:
+        if not page_identifier:
             raise ValueError('page_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_instance_custom_page')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_instance_custom_page',
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
 
-        url = '/v1/{0}/custom_pages/{1}'.format(
-            *self.encode_path_vars(self.crn, page_identifier))
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        path_param_keys = ['crn', 'page_identifier']
+        path_param_values = self.encode_path_vars(self.crn, page_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/{crn}/custom_pages/{page_identifier}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
-
-    def update_instance_custom_page(self,
+    def update_instance_custom_page(
+        self,
         page_identifier: str,
         *,
-        url: str = None,
-        state: str = None,
-        **kwargs
+        url: Optional[str] = None,
+        state: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update a custom page for a given instance.
@@ -189,17 +209,19 @@ class CustomPagesV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `CustomPageSpecificResp` object
         """
 
-        if page_identifier is None:
+        if not page_identifier:
             raise ValueError('page_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_instance_custom_page')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_instance_custom_page',
+        )
         headers.update(sdk_headers)
 
         data = {
             'url': url,
-            'state': state
+            'state': state,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -207,20 +229,26 @@ class CustomPagesV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
 
-        url = '/v1/{0}/custom_pages/{1}'.format(
-            *self.encode_path_vars(self.crn, page_identifier))
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        path_param_keys = ['crn', 'page_identifier']
+        path_param_values = self.encode_path_vars(self.crn, page_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/{crn}/custom_pages/{page_identifier}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
-
-    def list_zone_custom_pages(self,
-        **kwargs
+    def list_zone_custom_pages(
+        self,
+        **kwargs,
     ) -> DetailedResponse:
         """
         List all custom pages for a given zone.
@@ -233,27 +261,35 @@ class CustomPagesV1(BaseService):
         """
 
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='list_zone_custom_pages')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_zone_custom_pages',
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
 
-        url = '/v1/{0}/zones/{1}/custom_pages'.format(
-            *self.encode_path_vars(self.crn, self.zone_identifier))
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        path_param_keys = ['crn', 'zone_identifier']
+        path_param_values = self.encode_path_vars(self.crn, self.zone_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/{crn}/zones/{zone_identifier}/custom_pages'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
-
-    def get_zone_custom_page(self,
+    def get_zone_custom_page(
+        self,
         page_identifier: str,
-        **kwargs
+        **kwargs,
     ) -> DetailedResponse:
         """
         Get a custom page for a given zone.
@@ -266,33 +302,41 @@ class CustomPagesV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `CustomPageSpecificResp` object
         """
 
-        if page_identifier is None:
+        if not page_identifier:
             raise ValueError('page_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_zone_custom_page')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_zone_custom_page',
+        )
         headers.update(sdk_headers)
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
 
-        url = '/v1/{0}/zones/{1}/custom_pages/{2}'.format(
-            *self.encode_path_vars(self.crn, self.zone_identifier, page_identifier))
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
+        path_param_keys = ['crn', 'zone_identifier', 'page_identifier']
+        path_param_values = self.encode_path_vars(self.crn, self.zone_identifier, page_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/{crn}/zones/{zone_identifier}/custom_pages/{page_identifier}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
-
-    def update_zone_custom_page(self,
+    def update_zone_custom_page(
+        self,
         page_identifier: str,
         *,
-        url: str = None,
-        state: str = None,
-        **kwargs
+        url: Optional[str] = None,
+        state: Optional[str] = None,
+        **kwargs,
     ) -> DetailedResponse:
         """
         Update a custom page for a given zone.
@@ -307,17 +351,19 @@ class CustomPagesV1(BaseService):
         :rtype: DetailedResponse with `dict` result representing a `CustomPageSpecificResp` object
         """
 
-        if page_identifier is None:
+        if not page_identifier:
             raise ValueError('page_identifier must be provided')
         headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='update_zone_custom_page')
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_zone_custom_page',
+        )
         headers.update(sdk_headers)
 
         data = {
             'url': url,
-            'state': state
+            'state': state,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -325,15 +371,21 @@ class CustomPagesV1(BaseService):
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
 
-        url = '/v1/{0}/zones/{1}/custom_pages/{2}'.format(
-            *self.encode_path_vars(self.crn, self.zone_identifier, page_identifier))
-        request = self.prepare_request(method='PUT',
-                                       url=url,
-                                       headers=headers,
-                                       data=data)
+        path_param_keys = ['crn', 'zone_identifier', 'page_identifier']
+        path_param_values = self.encode_path_vars(self.crn, self.zone_identifier, page_identifier)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/{crn}/zones/{zone_identifier}/custom_pages/{page_identifier}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
 
-        response = self.send(request)
+        response = self.send(request, **kwargs)
         return response
 
 
@@ -346,6 +398,7 @@ class GetInstanceCustomPageEnums:
         """
         Custom page identifier.
         """
+
         BASIC_CHALLENGE = 'basic_challenge'
         WAF_CHALLENGE = 'waf_challenge'
         WAF_BLOCK = 'waf_block'
@@ -353,6 +406,7 @@ class GetInstanceCustomPageEnums:
         COUNTRY_CHALLENGE = 'country_challenge'
         IP_BLOCK = 'ip_block'
         UNDER_ATTACK = 'under_attack'
+        ALWAYS_ONLINE = 'always_online'
 
 
 class UpdateInstanceCustomPageEnums:
@@ -364,6 +418,7 @@ class UpdateInstanceCustomPageEnums:
         """
         Custom page identifier.
         """
+
         BASIC_CHALLENGE = 'basic_challenge'
         WAF_CHALLENGE = 'waf_challenge'
         WAF_BLOCK = 'waf_block'
@@ -371,6 +426,7 @@ class UpdateInstanceCustomPageEnums:
         COUNTRY_CHALLENGE = 'country_challenge'
         IP_BLOCK = 'ip_block'
         UNDER_ATTACK = 'under_attack'
+        ALWAYS_ONLINE = 'always_online'
 
 
 class GetZoneCustomPageEnums:
@@ -382,6 +438,7 @@ class GetZoneCustomPageEnums:
         """
         Custom page identifier.
         """
+
         BASIC_CHALLENGE = 'basic_challenge'
         WAF_CHALLENGE = 'waf_challenge'
         WAF_BLOCK = 'waf_block'
@@ -389,6 +446,7 @@ class GetZoneCustomPageEnums:
         COUNTRY_CHALLENGE = 'country_challenge'
         IP_BLOCK = 'ip_block'
         UNDER_ATTACK = 'under_attack'
+        ALWAYS_ONLINE = 'always_online'
 
 
 class UpdateZoneCustomPageEnums:
@@ -400,6 +458,7 @@ class UpdateZoneCustomPageEnums:
         """
         Custom page identifier.
         """
+
         BASIC_CHALLENGE = 'basic_challenge'
         WAF_CHALLENGE = 'waf_challenge'
         WAF_BLOCK = 'waf_block'
@@ -407,6 +466,7 @@ class UpdateZoneCustomPageEnums:
         COUNTRY_CHALLENGE = 'country_challenge'
         IP_BLOCK = 'ip_block'
         UNDER_ATTACK = 'under_attack'
+        ALWAYS_ONLINE = 'always_online'
 
 
 ##############################################################################
@@ -414,23 +474,25 @@ class UpdateZoneCustomPageEnums:
 ##############################################################################
 
 
-class ListCustomPagesRespResultInfo():
+class ListCustomPagesRespResultInfo:
     """
     Statistics of results.
 
-    :attr int page: Page number.
-    :attr int per_page: Number of results per page.
-    :attr int total_pages: Number of total pages.
-    :attr int count: Number of results.
-    :attr int total_count: Total number of results.
+    :param int page: Page number.
+    :param int per_page: Number of results per page.
+    :param int total_pages: Number of total pages.
+    :param int count: Number of results.
+    :param int total_count: Total number of results.
     """
 
-    def __init__(self,
-                 page: int,
-                 per_page: int,
-                 total_pages: int,
-                 count: int,
-                 total_count: int) -> None:
+    def __init__(
+        self,
+        page: int,
+        per_page: int,
+        total_pages: int,
+        count: int,
+        total_count: int,
+    ) -> None:
         """
         Initialize a ListCustomPagesRespResultInfo object.
 
@@ -450,24 +512,24 @@ class ListCustomPagesRespResultInfo():
     def from_dict(cls, _dict: Dict) -> 'ListCustomPagesRespResultInfo':
         """Initialize a ListCustomPagesRespResultInfo object from a json dictionary."""
         args = {}
-        if 'page' in _dict:
-            args['page'] = _dict.get('page')
+        if (page := _dict.get('page')) is not None:
+            args['page'] = page
         else:
             raise ValueError('Required property \'page\' not present in ListCustomPagesRespResultInfo JSON')
-        if 'per_page' in _dict:
-            args['per_page'] = _dict.get('per_page')
+        if (per_page := _dict.get('per_page')) is not None:
+            args['per_page'] = per_page
         else:
             raise ValueError('Required property \'per_page\' not present in ListCustomPagesRespResultInfo JSON')
-        if 'total_pages' in _dict:
-            args['total_pages'] = _dict.get('total_pages')
+        if (total_pages := _dict.get('total_pages')) is not None:
+            args['total_pages'] = total_pages
         else:
             raise ValueError('Required property \'total_pages\' not present in ListCustomPagesRespResultInfo JSON')
-        if 'count' in _dict:
-            args['count'] = _dict.get('count')
+        if (count := _dict.get('count')) is not None:
+            args['count'] = count
         else:
             raise ValueError('Required property \'count\' not present in ListCustomPagesRespResultInfo JSON')
-        if 'total_count' in _dict:
-            args['total_count'] = _dict.get('total_count')
+        if (total_count := _dict.get('total_count')) is not None:
+            args['total_count'] = total_count
         else:
             raise ValueError('Required property \'total_count\' not present in ListCustomPagesRespResultInfo JSON')
         return cls(**args)
@@ -510,29 +572,32 @@ class ListCustomPagesRespResultInfo():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class CustomPageObject():
+
+class CustomPageObject:
     """
     custom page object.
 
-    :attr str id: Custom page identifier.
-    :attr str description: Description of custom page.
-    :attr List[str] required_tokens: array of page tokens.
-    :attr str preview_target: Preview target.
-    :attr datetime created_on: Created date.
-    :attr datetime modified_on: Modified date.
-    :attr str url: A URL that is associated with the Custom Page.
-    :attr str state: The Custom Page state.
+    :param str id: Custom page identifier.
+    :param str description: Description of custom page.
+    :param List[str] required_tokens: array of page tokens.
+    :param str preview_target: Preview target.
+    :param datetime created_on: Created date.
+    :param datetime modified_on: Modified date.
+    :param str url: A URL that is associated with the Custom Page.
+    :param str state: The Custom Page state.
     """
 
-    def __init__(self,
-                 id: str,
-                 description: str,
-                 required_tokens: List[str],
-                 preview_target: str,
-                 created_on: datetime,
-                 modified_on: datetime,
-                 url: str,
-                 state: str) -> None:
+    def __init__(
+        self,
+        id: str,
+        description: str,
+        required_tokens: List[str],
+        preview_target: str,
+        created_on: datetime,
+        modified_on: datetime,
+        url: str,
+        state: str,
+    ) -> None:
         """
         Initialize a CustomPageObject object.
 
@@ -558,36 +623,36 @@ class CustomPageObject():
     def from_dict(cls, _dict: Dict) -> 'CustomPageObject':
         """Initialize a CustomPageObject object from a json dictionary."""
         args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
+        if (id := _dict.get('id')) is not None:
+            args['id'] = id
         else:
             raise ValueError('Required property \'id\' not present in CustomPageObject JSON')
-        if 'description' in _dict:
-            args['description'] = _dict.get('description')
+        if (description := _dict.get('description')) is not None:
+            args['description'] = description
         else:
             raise ValueError('Required property \'description\' not present in CustomPageObject JSON')
-        if 'required_tokens' in _dict:
-            args['required_tokens'] = _dict.get('required_tokens')
+        if (required_tokens := _dict.get('required_tokens')) is not None:
+            args['required_tokens'] = required_tokens
         else:
             raise ValueError('Required property \'required_tokens\' not present in CustomPageObject JSON')
-        if 'preview_target' in _dict:
-            args['preview_target'] = _dict.get('preview_target')
+        if (preview_target := _dict.get('preview_target')) is not None:
+            args['preview_target'] = preview_target
         else:
             raise ValueError('Required property \'preview_target\' not present in CustomPageObject JSON')
-        if 'created_on' in _dict:
-            args['created_on'] = string_to_datetime(_dict.get('created_on'))
+        if (created_on := _dict.get('created_on')) is not None:
+            args['created_on'] = string_to_datetime(created_on)
         else:
             raise ValueError('Required property \'created_on\' not present in CustomPageObject JSON')
-        if 'modified_on' in _dict:
-            args['modified_on'] = string_to_datetime(_dict.get('modified_on'))
+        if (modified_on := _dict.get('modified_on')) is not None:
+            args['modified_on'] = string_to_datetime(modified_on)
         else:
             raise ValueError('Required property \'modified_on\' not present in CustomPageObject JSON')
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
+        if (url := _dict.get('url')) is not None:
+            args['url'] = url
         else:
             raise ValueError('Required property \'url\' not present in CustomPageObject JSON')
-        if 'state' in _dict:
-            args['state'] = _dict.get('state')
+        if (state := _dict.get('state')) is not None:
+            args['state'] = state
         else:
             raise ValueError('Required property \'state\' not present in CustomPageObject JSON')
         return cls(**args)
@@ -640,6 +705,7 @@ class CustomPageObject():
         """
         Custom page identifier.
         """
+
         BASIC_CHALLENGE = 'basic_challenge'
         WAF_CHALLENGE = 'waf_challenge'
         WAF_BLOCK = 'waf_block'
@@ -647,41 +713,48 @@ class CustomPageObject():
         COUNTRY_CHALLENGE = 'country_challenge'
         IP_BLOCK = 'ip_block'
         UNDER_ATTACK = 'under_attack'
+        ALWAYS_ONLINE = 'always_online'
 
 
     class RequiredTokensEnum(str, Enum):
         """
         required_tokens.
         """
+
         CAPTCHA_BOX = '::CAPTCHA_BOX::'
         IM_UNDER_ATTACK_BOX = '::IM_UNDER_ATTACK_BOX::'
         CLOUDFLARE_ERROR_500S_BOX = '::CLOUDFLARE_ERROR_500S_BOX::'
         CLOUDFLARE_ERROR_1000S_BOX = '::CLOUDFLARE_ERROR_1000S_BOX::'
+        ALWAYS_ONLINE_NO_COPY_BOX = '::ALWAYS_ONLINE_NO_COPY_BOX::'
 
 
     class StateEnum(str, Enum):
         """
         The Custom Page state.
         """
+
         DEFAULT = 'default'
         CUSTOMIZED = 'customized'
 
 
-class CustomPageSpecificResp():
+
+class CustomPageSpecificResp:
     """
     custom page specific response.
 
-    :attr bool success: Was operation successful.
-    :attr List[List[str]] errors: Array of errors encountered.
-    :attr List[List[str]] messages: Array of messages returned.
-    :attr CustomPageObject result: custom page object.
+    :param bool success: Was operation successful.
+    :param List[List[str]] errors: Array of errors encountered.
+    :param List[List[str]] messages: Array of messages returned.
+    :param CustomPageObject result: custom page object.
     """
 
-    def __init__(self,
-                 success: bool,
-                 errors: List[List[str]],
-                 messages: List[List[str]],
-                 result: 'CustomPageObject') -> None:
+    def __init__(
+        self,
+        success: bool,
+        errors: List[List[str]],
+        messages: List[List[str]],
+        result: 'CustomPageObject',
+    ) -> None:
         """
         Initialize a CustomPageSpecificResp object.
 
@@ -699,20 +772,20 @@ class CustomPageSpecificResp():
     def from_dict(cls, _dict: Dict) -> 'CustomPageSpecificResp':
         """Initialize a CustomPageSpecificResp object from a json dictionary."""
         args = {}
-        if 'success' in _dict:
-            args['success'] = _dict.get('success')
+        if (success := _dict.get('success')) is not None:
+            args['success'] = success
         else:
             raise ValueError('Required property \'success\' not present in CustomPageSpecificResp JSON')
-        if 'errors' in _dict:
-            args['errors'] = _dict.get('errors')
+        if (errors := _dict.get('errors')) is not None:
+            args['errors'] = errors
         else:
             raise ValueError('Required property \'errors\' not present in CustomPageSpecificResp JSON')
-        if 'messages' in _dict:
-            args['messages'] = _dict.get('messages')
+        if (messages := _dict.get('messages')) is not None:
+            args['messages'] = messages
         else:
             raise ValueError('Required property \'messages\' not present in CustomPageSpecificResp JSON')
-        if 'result' in _dict:
-            args['result'] = CustomPageObject.from_dict(_dict.get('result'))
+        if (result := _dict.get('result')) is not None:
+            args['result'] = CustomPageObject.from_dict(result)
         else:
             raise ValueError('Required property \'result\' not present in CustomPageSpecificResp JSON')
         return cls(**args)
@@ -732,7 +805,10 @@ class CustomPageSpecificResp():
         if hasattr(self, 'messages') and self.messages is not None:
             _dict['messages'] = self.messages
         if hasattr(self, 'result') and self.result is not None:
-            _dict['result'] = self.result.to_dict()
+            if isinstance(self.result, dict):
+                _dict['result'] = self.result
+            else:
+                _dict['result'] = self.result.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -753,23 +829,26 @@ class CustomPageSpecificResp():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class ListCustomPagesResp():
+
+class ListCustomPagesResp:
     """
     list of custom pages response.
 
-    :attr bool success: Was operation successful.
-    :attr List[List[str]] errors: Array of errors encountered.
-    :attr List[List[str]] messages: Array of messages returned.
-    :attr List[CustomPageObject] result: custom pages array.
-    :attr ListCustomPagesRespResultInfo result_info: Statistics of results.
+    :param bool success: Was operation successful.
+    :param List[List[str]] errors: Array of errors encountered.
+    :param List[List[str]] messages: Array of messages returned.
+    :param List[CustomPageObject] result: custom pages array.
+    :param ListCustomPagesRespResultInfo result_info: Statistics of results.
     """
 
-    def __init__(self,
-                 success: bool,
-                 errors: List[List[str]],
-                 messages: List[List[str]],
-                 result: List['CustomPageObject'],
-                 result_info: 'ListCustomPagesRespResultInfo') -> None:
+    def __init__(
+        self,
+        success: bool,
+        errors: List[List[str]],
+        messages: List[List[str]],
+        result: List['CustomPageObject'],
+        result_info: 'ListCustomPagesRespResultInfo',
+    ) -> None:
         """
         Initialize a ListCustomPagesResp object.
 
@@ -789,24 +868,24 @@ class ListCustomPagesResp():
     def from_dict(cls, _dict: Dict) -> 'ListCustomPagesResp':
         """Initialize a ListCustomPagesResp object from a json dictionary."""
         args = {}
-        if 'success' in _dict:
-            args['success'] = _dict.get('success')
+        if (success := _dict.get('success')) is not None:
+            args['success'] = success
         else:
             raise ValueError('Required property \'success\' not present in ListCustomPagesResp JSON')
-        if 'errors' in _dict:
-            args['errors'] = _dict.get('errors')
+        if (errors := _dict.get('errors')) is not None:
+            args['errors'] = errors
         else:
             raise ValueError('Required property \'errors\' not present in ListCustomPagesResp JSON')
-        if 'messages' in _dict:
-            args['messages'] = _dict.get('messages')
+        if (messages := _dict.get('messages')) is not None:
+            args['messages'] = messages
         else:
             raise ValueError('Required property \'messages\' not present in ListCustomPagesResp JSON')
-        if 'result' in _dict:
-            args['result'] = [CustomPageObject.from_dict(x) for x in _dict.get('result')]
+        if (result := _dict.get('result')) is not None:
+            args['result'] = [CustomPageObject.from_dict(v) for v in result]
         else:
             raise ValueError('Required property \'result\' not present in ListCustomPagesResp JSON')
-        if 'result_info' in _dict:
-            args['result_info'] = ListCustomPagesRespResultInfo.from_dict(_dict.get('result_info'))
+        if (result_info := _dict.get('result_info')) is not None:
+            args['result_info'] = ListCustomPagesRespResultInfo.from_dict(result_info)
         else:
             raise ValueError('Required property \'result_info\' not present in ListCustomPagesResp JSON')
         return cls(**args)
@@ -826,9 +905,18 @@ class ListCustomPagesResp():
         if hasattr(self, 'messages') and self.messages is not None:
             _dict['messages'] = self.messages
         if hasattr(self, 'result') and self.result is not None:
-            _dict['result'] = [x.to_dict() for x in self.result]
+            result_list = []
+            for v in self.result:
+                if isinstance(v, dict):
+                    result_list.append(v)
+                else:
+                    result_list.append(v.to_dict())
+            _dict['result'] = result_list
         if hasattr(self, 'result_info') and self.result_info is not None:
-            _dict['result_info'] = self.result_info.to_dict()
+            if isinstance(self.result_info, dict):
+                _dict['result_info'] = self.result_info
+            else:
+                _dict['result_info'] = self.result_info.to_dict()
         return _dict
 
     def _to_dict(self):
