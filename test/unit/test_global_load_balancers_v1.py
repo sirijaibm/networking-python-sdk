@@ -17,16 +17,19 @@
 Unit Tests for GlobalLoadBalancersV1
 """
 
-from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+
+import pytest
+
+try:
+    from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+    from ibm_cloud_networking_services.global_load_balancers_v1 import *
+except ImportError:
+    pytest.skip("ibm_cloud_sdk_core or ibm_cloud_networking_services not installed", allow_module_level=True)
 import inspect
 import json
-import pytest
 import re
 import responses
 import urllib
-from ibm_cloud_networking_services.global_load_balancers_v1 import *
-
-
 service = GlobalLoadBalancersV1(
     authenticator=NoAuthAuthenticator()
     )

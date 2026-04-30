@@ -13,16 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
-import inspect
-import io
-import json
+
 import pytest
+
+try:
+    from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+    from ibm_cloud_networking_services.dns_record_bulk_v1 import *
+except ImportError:
+    pytest.skip("ibm_cloud_sdk_core or ibm_cloud_networking_services not installed", allow_module_level=True)
+import inspect
+import json
 import re
 import responses
-import tempfile
-from ibm_cloud_networking_services.dns_record_bulk_v1 import *
-
 crn = 'testString'
 zone_identifier = 'testString'
 

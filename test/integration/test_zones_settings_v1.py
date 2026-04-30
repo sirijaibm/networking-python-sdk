@@ -646,6 +646,43 @@ class TestZonesSettingsV1(unittest.TestCase):
             value=self.value).get_result()
         assert response is not None and response.get('success') is True
 
+    def test_4_get_alert_policy(self):                                          
+        """ test for success """                                                
+        alertsPolicy_id = self.test_3_update_alert_policies()                   
+                                                                                
+        #Get Alert-policy                                                       
+        response = self.service1.get_alert_policy(                              
+            policy_id = alertsPolicy_id )                                       
+        assert response is not None and response.get_status_code() == 200       
+        assert len(response.get_result()['result']) >= 1                        
+
+    def test_5_delete_alert_policy(self):                                       
+        """ test for success """                                                
+        alertsPolicy_id = self.test_3_update_alert_policies()                   
+                                                                                
+        #Delete Alert-policy                                                    
+        response = self.service1.delete_alert_policy(                           
+            policy_id = alertsPolicy_id )                                       
+        assert response is not None and response.get_status_code() == 200       
+        assert len(response.get_result()['result']) >= 1                        
+        delete_policy_id = response.get_result()['result']['id']                
+        assert delete_policy_id == alertsPolicy_id                              
+
+    def test_1_get_security_level(self):
+        """ test for success """
+        response = self.service.get_security_level()
+        assert response is not None and response.get_status_code() == 200
+        assert response.get_result()['result'] is not None
+
+    def test_2_update_security_level(self):
+        """ test for success """
+        value = 'medium'
+        response = self.service.update_security_level(
+            value=value
+        )
+        assert response is not None and response.get_status_code() == 200
+        assert response.get_result()['result'] is not None
+        assert response.get_result()['result']['value'] == value
 
 if __name__ == '__main__':
     unittest.main()

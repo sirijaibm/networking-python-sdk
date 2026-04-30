@@ -19,8 +19,14 @@ Test methods in the common module
 """
 
 import unittest
-from ibm_cloud_networking_services import common
 
+
+import pytest
+
+try:
+    from ibm_cloud_networking_services import common
+except ImportError:
+    pytest.skip("ibm_cloud_sdk_core or ibm_cloud_networking_services not installed", allow_module_level=True)
 
 class TestCommon(unittest.TestCase):
     """

@@ -38,6 +38,7 @@ from .global_load_balancer_v1 import GlobalLoadBalancerV1
 from .page_rule_api_v1 import PageRuleApiV1
 from .range_applications_v1 import RangeApplicationsV1
 from .routing_v1 import RoutingV1
+from .rulesets_v1 import RulesetsV1
 from .security_events_api_v1 import SecurityEventsApiV1
 from .ssl_certificate_api_v1 import SslCertificateApiV1
 from .user_agent_blocking_rules_v1 import UserAgentBlockingRulesV1

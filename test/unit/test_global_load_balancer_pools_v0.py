@@ -13,14 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+
+import pytest
+
+try:
+    from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+    from ibm_cloud_networking_services.global_load_balancer_pools_v0 import *
+except ImportError:
+    pytest.skip("ibm_cloud_sdk_core or ibm_cloud_networking_services not installed", allow_module_level=True)
 import inspect
 import json
-import pytest
 import re
 import responses
-from ibm_cloud_networking_services.global_load_balancer_pools_v0 import *
-
 crn = 'testString'
 
 service = GlobalLoadBalancerPoolsV0(

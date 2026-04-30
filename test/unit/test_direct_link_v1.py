@@ -18,20 +18,20 @@ Unit Tests for DirectLinkV1
 """
 
 from datetime import datetime, timezone
-from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
-from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
+
+import pytest
+
+try:
+    from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+    from ibm_cloud_networking_services.direct_link_v1 import *
+except ImportError:
+    pytest.skip("ibm_cloud_sdk_core or ibm_cloud_networking_services not installed", allow_module_level=True)
 import inspect
-import io
 import json
 import os
-import pytest
 import re
-import requests
 import responses
-import tempfile
 import urllib
-from ibm_cloud_networking_services.direct_link_v1 import *
-
 version = 'testString'
 
 _service = DirectLinkV1(

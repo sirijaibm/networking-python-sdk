@@ -17,15 +17,20 @@
 Unit Tests for WebhooksV1
 """
 
-from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+
+import pytest
+
+try:
+    from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+    from ibm_cloud_networking_services.webhooks_v1 import *
+except ImportError:
+    pytest.skip("ibm_cloud_sdk_core or ibm_cloud_networking_services not installed", allow_module_level=True)
 import inspect
 import json
 import os
-import pytest
 import re
 import responses
 import urllib
-from ibm_cloud_networking_services.webhooks_v1 import *
 
 crn = 'testString'
 

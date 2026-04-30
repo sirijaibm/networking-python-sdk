@@ -14,15 +14,18 @@
 # limitations under the License.
 
 from datetime import datetime, timezone
-from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+
+import pytest
+
+try:
+    from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
+    from ibm_cloud_networking_services.dns_zones_v1 import *
+except ImportError:
+    pytest.skip("ibm_cloud_sdk_core or ibm_cloud_networking_services not installed", allow_module_level=True)
 import inspect
 import json
-import pytest
-import requests
+import re
 import responses
-from ibm_cloud_networking_services.dns_zones_v1 import *
-
-
 service = DnsZonesV1(
     authenticator=NoAuthAuthenticator()
     )
