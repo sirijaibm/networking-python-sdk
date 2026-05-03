@@ -646,6 +646,28 @@ class TestZonesSettingsV1(unittest.TestCase):
             value=self.value).get_result()
         assert response is not None and response.get('success') is True
 
+    def test_1_security_level_setting(self):
+    """ Get security level setting """
+    response = self.zonesSettings.get_security_level().get_result()
+    assert response is not None and response.get('success') is True
+    result = response.get('result')
+    if result.get('value') == 'off':
+        self.value = 'essentially_off'
+    elif result.get('value') == 'essentially_off':
+        self.value = 'low'
+    elif result.get('value') == 'low':
+        self.value = 'medium'
+    elif result.get('value') == 'medium':
+        self.value = 'high'
+    elif result.get('value') == 'high':
+        self.value = 'under_attack'
+    else:
+        self.value = 'medium'
+
+    """ Update security level setting """
+    response = self.zonesSettings.update_security_level(
+        value=self.value).get_result()
+    assert response is not None and response.get('success') is True
 
 if __name__ == '__main__':
     unittest.main()
